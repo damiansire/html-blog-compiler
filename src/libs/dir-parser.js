@@ -31,7 +31,23 @@ function obtenerNombresDelDirectorioYSubDirectorio(
   return elementos;
 }
 
-function obtenerNombresDelDirectorio(rutaProyecto, onlyFiles, onlyFolders) {
+/**
+ * Obtiene los nombres de los archivos y carpetas en un directorio dado, aplicando filtros opcionales.
+ *
+ * @param {string} rutaProyecto - Ruta del directorio a explorar.
+ * @param {Object} [options] - Opciones de filtrado.
+ * @param {boolean} [options.onlyFiles=false] - Indica si solo se deben incluir archivos en los resultados.
+ * @param {boolean} [options.onlyFolders=false] - Indica si solo se deben incluir carpetas en los resultados.
+ * @param {string} [options.fileExtension=null] - Extensión de archivo opcional para filtrar por tipo de archivo.
+ * @returns {Array} - Array de objetos con información de los archivos y carpetas encontrados.
+ */
+function obtenerNombresDelDirectorio(rutaProyecto, options = {}) {
+  const {
+    onlyFiles = false,
+    onlyFolders = false,
+    fileExtension = null,
+  } = options;
+
   const archivos = fs.readdirSync(rutaProyecto);
   const elementos = [];
 
@@ -44,10 +60,13 @@ function obtenerNombresDelDirectorio(rutaProyecto, onlyFiles, onlyFolders) {
       esCarpeta: stats.isDirectory(),
     };
 
+    const archivoExtension = path.extname(archivo).toLowerCase();
+
     if (
-      (!onlyFiles && !onlyFolders) ||
-      (onlyFolders && stats.isDirectory()) ||
-      (onlyFiles && !stats.isDirectory())
+      ((!onlyFiles && !onlyFolders) ||
+        (onlyFolders && stats.isDirectory()) ||
+        (onlyFiles && !stats.isDirectory())) &&
+      (!fileExtension || archivoExtension === fileExtension.toLowerCase())
     ) {
       elementos.push(elemento);
     }
@@ -55,9 +74,6 @@ function obtenerNombresDelDirectorio(rutaProyecto, onlyFiles, onlyFolders) {
 
   return elementos;
 }
-
-const elementos = obtenerNombresDelDirectorio("../blog/posts");
-console.log(elementos);
 
 module.exports = {
   obtenerNombresDelDirectorioYSubDirectorio,
