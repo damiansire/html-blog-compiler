@@ -1,0 +1,124 @@
+<html>
+  <body>
+    <article id="acdecf86-cdab-43a8-bf33-e30a4e7c7971" class="page sans">
+      <header>
+        <h1 class="page-title">Json-Server</h1>
+        <p class="page-description"></p>
+      </header>
+      <div class="page-body">
+        <p id="a155bc77-1a05-4c78-bc6d-11a7bbe139aa" class="">
+          La instalacion es bastante sensilla
+        </p>
+        <pre
+          id="c33c2596-bbe9-42c7-ae1b-284905b969dc"
+          class="code"
+        ><code>npm install -g json-server</code></pre>
+        <p id="c548ad3f-475d-4215-b542-27eb226dbe38" class="">
+          Luego, tenemos que crear los datos que vamos a exportar, para esto
+          creamos un db.json
+        </p>
+        <p id="321d395e-849c-4f11-82b3-da3a8f08ae0f" class="">
+          El contenido de este archivo
+        </p>
+        <p id="720db180-f148-47d2-a710-527524d5a5f4" class="">
+          La ejecucion es bastante sensilla:
+        </p>
+        <p id="5484cd85-5a17-4df2-8efb-c0f2708ce215" class="">
+          Como lo instalamos global, deberiamos poder ejecutarlo directo
+        </p>
+        <p id="f534a7b0-eb6f-408d-b273-1a79106c09ff" class=""></p>
+        <p id="94cbb870-ab65-4857-a382-83ddd2f043df" class="">
+          Si por alguna razon, lo anterior no te funciona
+        </p>
+        <pre
+          id="6e950f06-d813-4a52-953c-b2834bdc390a"
+          class="code"
+        ><code>json-server --watch db.json</code></pre>
+        <p id="76980ed9-e69a-4da0-a3fe-5c59db0ed92c" class=""></p>
+        <pre
+          id="9a0ec6bb-bb20-4546-9ee8-bc22b3bd9a99"
+          class="code"
+        ><code>npx json-server --watch db.json</code></pre>
+        <p id="8a8cc5d6-62b7-4b62-a31c-067a588bc78f" class="">
+          Nos muestra las rutas
+        </p>
+        <p id="eaee183d-2a7e-4881-9710-b49890ee9ace" class=""></p>
+        <p id="488c662f-9bc6-4180-97a3-40a75e500c9e" class="">
+          Ademas del get, tenemos disponible el post
+        </p>
+        <pre
+          id="d5e2d1f2-90e6-4101-bb15-2208514fb9b8"
+          class="code"
+        ><code>fetch(&quot;http://localhost:3000/people&quot;,  {
+    method: &quot;POST&quot;,
+    headers: {
+      &quot;Content-Type&quot;: &quot;application/json&quot;,
+    },
+    body: JSON.stringify({&quot;name&quot;:&quot;Damian&quot;})   
+})</code></pre>
+        <p id="b45877ad-12ab-49e1-a58c-066779009938" class="">
+          Incluso vamos a poder ver
+        </p>
+        <figure id="f6adff32-b11f-43d5-a962-e2184b27b6a9" class="image">
+          <a href="Json-Server%20acdecf86cdab43a8bf33e30a4e7c7971/Untitled.png"
+            ><img
+              style="width: 354px"
+              src="Json-Server%20acdecf86cdab43a8bf33e30a4e7c7971/Untitled.png"
+          /></a>
+        </figure>
+        <p id="69b6700a-315e-4600-b2d4-8902a951fd48" class="">
+          Filtra por el id, por ejemplo si queremos id: 4
+        </p>
+        <pre
+          id="2d4fbfcb-a3d0-4a38-bcab-c7588b2265a2"
+          class="code"
+        ><code>http://localhost:3000/people/4</code></pre>
+        <p id="56927d2b-9f3b-441e-b77a-e1a718d7d088" class="">
+          <a
+            href="https://itnext.io/how-to-generate-mock-data-using-faker-js-and-json-server-1d17007a08e4"
+            >https://itnext.io/how-to-generate-mock-data-using-faker-js-and-json-server-1d17007a08e4</a
+          >
+        </p>
+        <p id="ad64730c-9fbe-47d7-980e-8e9b47cb760d" class="">
+          Generar la informacion de forma programatica
+        </p>
+        <p id="f601a2bf-3046-4697-bd17-b86f80582afb" class="">
+          Creamos un archivo index.js y dentro colocam
+        </p>
+        <pre
+          id="ccbe7388-3be5-46ae-91a5-bd4d78541b77"
+          class="code"
+        ><code>module.exports = () =&gt; {
+  const data = { perros: [] };
+  // Create 1000 perros
+  for (let i = 0; i &lt; 1000; i++) {
+    data.perros.push({ id: i, name: `user${i}` });
+  }
+  return data;
+};</code></pre>
+        <p id="a7b34b70-178c-4a1d-be6f-234ef21b6977" class="">
+          Luego, lo ejecutamos con: npx json-server index.js
+        </p>
+        <p id="0f7185a3-114a-4226-a3e2-8b8709b1e1af" class=""></p>
+        <ul id="49a1040b-0ad2-4da2-8e87-05864a695877" class="to-do-list">
+          <li>
+            <div class="checkbox checkbox-off"></div>
+            <span class="to-do-children-unchecked"
+              >Puedo hacer post con fakerjs?</span
+            >
+            <div class="indented"></div>
+          </li>
+        </ul>
+        <ul id="fc746eb2-a1d6-425e-b9cb-e4798304fe52" class="to-do-list">
+          <li>
+            <div class="checkbox checkbox-off"></div>
+            <span class="to-do-children-unchecked"
+              >investigar mas sobre lowdb</span
+            >
+            <div class="indented"></div>
+          </li>
+        </ul>
+      </div>
+    </article>
+  </body>
+</html>
