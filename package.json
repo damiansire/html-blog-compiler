@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "start": "node index.js",
+    "watch": "node index.js watch",
+    "test"  : "mocha test/ --recursive"
+  },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
     "chokidar": "^3.5.3"
