@@ -1,4 +1,5 @@
 const chokidar = require("chokidar");
+const { runCompiler } = require("./compiler");
 
 // Directorio o archivos que deseas observar
 const directorioObservado = "../blog";
@@ -14,9 +15,8 @@ const watcher = chokidar.watch(directorioObservado, opciones);
 // Evento: cambio detectado en un archivo
 watcher.on("change", (rutaArchivo) => {
   console.log(`Se ha detectado un cambio en el archivo: ${rutaArchivo}`);
-
-  // Lógica para actuar en consecuencia al cambio en el archivo
-  // ...
+  console.log("Generando nuevo blog");
+  runCompiler();
 });
 
 // Evento: error en el observador
