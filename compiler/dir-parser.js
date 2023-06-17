@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-function obtenerNombresArchivosYCarpetas(rutaProyecto) {
+function obtenerNombresArchivosYCarpetas(rutaProyecto, rutaRelativa = "") {
   const archivos = fs.readdirSync(rutaProyecto);
 
   archivos.forEach((archivo) => {
@@ -9,10 +9,13 @@ function obtenerNombresArchivosYCarpetas(rutaProyecto) {
     const stats = fs.statSync(rutaArchivo);
 
     if (stats.isDirectory()) {
-      console.log(`Carpeta: ${archivo}`);
-      obtenerNombresArchivosYCarpetas(rutaArchivo); // Llamada recursiva para explorar subcarpetas
+      console.log(`Carpeta: ${rutaRelativa}/${archivo}`);
+      obtenerNombresArchivosYCarpetas(
+        rutaArchivo,
+        `${rutaRelativa}/${archivo}`
+      ); // Llamada recursiva para explorar subcarpetas
     } else if (stats.isFile()) {
-      console.log(`Archivo: ${archivo}`);
+      console.log(`Archivo: ${rutaRelativa}/${archivo}`);
     }
   });
 }
