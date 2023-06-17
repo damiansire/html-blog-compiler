@@ -2,14 +2,16 @@ const path = require("path");
 const fs = require("fs");
 const { getPathTag } = require("./html-parser");
 
+const basePath = path.resolve();
+const templatePath = path.resolve(basePath, "src", "template");
 // Construye la ruta del archivo utilizando la biblioteca 'path'
-const filePath = path.join("..", "blog", "layout", "posts", "index.html");
-const outputPath = path.join("..", "blog-compiled", "index.html");
+const filePath = path.join(templatePath, "layout", "posts", "index.html");
+const outputPath = path.join(basePath, "dist", "index.html");
 
 function convertirEtiquetaARuta(etiqueta) {
   const etiquetaSinMarcadores = etiqueta.replace(/<path\\|>/g, ""); // Eliminar los marcadores < y >
   const partes = etiquetaSinMarcadores.split("\\"); // Dividir la etiqueta en partes separadas por \
-  const ruta = path.join("..", "blog", ...partes, "index.html");
+  const ruta = path.join(templatePath, ...partes, "index.html");
   return ruta;
 }
 
@@ -22,7 +24,17 @@ function runCompiler() {
   while (match !== null) {
     const currentTag = match[0];
     const rutaElement = convertirEtiquetaARuta(currentTag);
-    const htmlElement = fs.readFileSync(rutaElement, "utf-8");
+    let htmlElement;
+    try {
+      htmlElement = fs.readFileSync(rutaElement, "utf-8");
+    } catch (err) {
+      if (err.errno === -4058) {
+        console.log(
+          `No se pudo encontrar ${currentTag} en la ruta: ${rutaElement}`
+        );
+      }
+      throw err;
+    }
     htmlOutput = htmlOutput.replace(currentTag, htmlElement);
     match = getPathTag(htmlOutput);
   }
