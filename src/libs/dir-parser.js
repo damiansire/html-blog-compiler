@@ -79,3 +79,9 @@ module.exports = {
   obtenerNombresDelDirectorioYSubDirectorio,
   obtenerNombresDelDirectorio,
 };
+
+/*
+let data = obtenerNombresDelDirectorio("../data-template/posts");
+data = data.map((x) => x.nombre);
+console.log(data);
+*/
